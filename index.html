@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Ömer Besleniyor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="appbar">
+      <div class="brand">
+        <h1>Ömer Besleniyor</h1>
+        <p>Yediklerin vücudu nasıl değiştirir? Ömer’i besle ve izle.</p>
+      </div>
+      <div class="tools">
+        <label class="field"
+          ><span>Kıyafet</span
+          ><select id="outfit"></select
+        ></label>
+        <button class="btn" id="mute" aria-pressed="false">Ses açık</button>
+        <button class="btn" id="reset">Baştan başla</button>
+      </div>
+    </header>
+
+    <main class="app">
+      <section class="stage" id="stage" aria-label="Ömer">
+        <div class="stage__status" id="lvl"></div>
+        <div class="bubble" id="bubble" aria-live="polite"></div>
+        <div class="ruler" id="ruler" hidden></div>
+        <div id="kid">
+          <svg viewBox="0 0 200 400" aria-label="Ömer">
+            <defs>
+              <radialGradient id="sh" cx=".42" cy=".38" r=".7">
+                <stop offset=".55" stop-color="#6B2E14" stop-opacity="0" />
+                <stop offset="1" stop-color="#6B2E14" stop-opacity=".3" />
+              </radialGradient>
+              <radialGradient id="bl">
+                <stop offset="0" stop-color="#F0707A" stop-opacity=".5" />
+                <stop offset="1" stop-color="#F0707A" stop-opacity="0" />
+              </radialGradient>
+              <linearGradient id="hr" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#6E452A" />
+                <stop offset="1" stop-color="#2E1A0E" />
+              </linearGradient>
+              <linearGradient id="sf" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#2F6A9E" />
+                <stop offset=".5" stop-color="#4F92CC" />
+                <stop offset="1" stop-color="#2F6A9E" />
+              </linearGradient>
+              <linearGradient id="tb" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#E0A56E" />
+                <stop offset="1" stop-color="#A9703F" />
+              </linearGradient>
+              <linearGradient id="lidsh" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#000" stop-opacity=".35" />
+                <stop offset=".55" stop-color="#000" stop-opacity="0" />
+              </linearGradient>
+              <linearGradient id="dk" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#000" stop-opacity="0" />
+                <stop offset=".6" stop-color="#000" stop-opacity=".12" />
+                <stop offset="1" stop-color="#000" stop-opacity=".45" />
+              </linearGradient>
+              <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#FFC27A" stop-opacity=".55" />
+                <stop offset=".12" stop-color="#FFC27A" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <ellipse cx="100" cy="391" rx="54" ry="7" fill="#000" opacity=".38" />
+            <path
+              d="M68 284Q66 330 72 372L92 372Q96 330 96 284Z"
+              class="sk"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path d="M68 284Q66 330 72 372L92 372Q96 330 96 284Z" fill="url(#dk)" />
+            <path d="M68 284Q66 330 72 372L92 372Q96 330 96 284Z" fill="url(#rim)" />
+            <path
+              d="M104 284Q104 330 108 372L128 372Q134 330 132 284Z"
+              class="sk"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path d="M104 284Q104 330 108 372L128 372Q134 330 132 284Z" fill="url(#dk)" />
+            <path d="M104 284Q104 330 108 372L128 372Q134 330 132 284Z" fill="url(#rim)" />
+            <path
+              d="M72 346h20v26H72zM108 346h20v26h-20z"
+              fill="#F4F1EA"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M64 386Q62 372 74 366L94 366Q100 372 98 386Z"
+              fill="#B83A2E"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path d="M64 386Q62 372 74 366L94 366Q100 372 98 386Z" fill="url(#dk)" />
+            <path d="M64 386Q62 372 74 366L94 366Q100 372 98 386Z" fill="url(#rim)" />
+            <path
+              d="M136 386Q138 372 126 366L106 366Q100 372 102 386Z"
+              fill="#B83A2E"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path d="M136 386Q138 372 126 366L106 366Q100 372 102 386Z" fill="url(#dk)" />
+            <path d="M136 386Q138 372 126 366L106 366Q100 372 102 386Z" fill="url(#rim)" />
+            <path
+              d="M60 387h40v5H60zM100 387h40v5h-40z"
+              fill="#EEE"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M64 232Q100 246 136 232L134 372L102 372L100 280L98 372L66 372Z"
+              fill="#3A4A5E"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path d="M64 232Q100 246 136 232L134 372L102 372L100 280L98 372L66 372Z" fill="url(#dk)" />
+            <path d="M64 232Q100 246 136 232L134 372L102 372L100 280L98 372L66 372Z" fill="url(#rim)" />
+            <g id="arms">
+              <path
+                d="M36 178L50 182L48 228Q42 236 36 228Z"
+                class="sk"
+                stroke="#1C1410"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path d="M36 178L50 182L48 228Q42 236 36 228Z" fill="url(#dk)" />
+              <path d="M36 178L50 182L48 228Q42 236 36 228Z" fill="url(#rim)" />
+              <ellipse
+                cx="42"
+                cy="236"
+                rx="7.5"
+                ry="10"
+                class="sk"
+                stroke="#1C1410"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M164 178L150 182L152 228Q158 236 164 228Z"
+                class="sk"
+                stroke="#1C1410"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path d="M164 178L150 182L152 228Q158 236 164 228Z" fill="url(#dk)" />
+              <path d="M164 178L150 182L152 228Q158 236 164 228Z" fill="url(#rim)" />
+              <ellipse
+                cx="158"
+                cy="236"
+                rx="7.5"
+                ry="10"
+                class="sk"
+                stroke="#1C1410"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+            </g>
+            <path
+              d="M52 142Q74 136 100 138Q126 136 148 142Q161 150 158 202L152 242Q100 254 48 242L42 202Q39 150 52 142Z"
+              fill="url(#sf)"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M52 142Q74 136 100 138Q126 136 148 142Q161 150 158 202L152 242Q100 254 48 242L42 202Q39 150 52 142Z"
+              fill="url(#dk)"
+            />
+            <path
+              d="M52 142Q74 136 100 138Q126 136 148 142Q161 150 158 202L152 242Q100 254 48 242L42 202Q39 150 52 142Z"
+              fill="url(#rim)"
+            />
+            <path
+              d="M52 144Q35 150 35 178L51 183Q54 162 62 152Z"
+              fill="#3E7DB8"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path d="M52 144Q35 150 35 178L51 183Q54 162 62 152Z" fill="url(#dk)" />
+            <path d="M52 144Q35 150 35 178L51 183Q54 162 62 152Z" fill="url(#rim)" />
+            <path
+              d="M148 144Q165 150 165 178L149 183Q146 162 138 152Z"
+              fill="#3E7DB8"
+              stroke="#1C1410"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+            <path d="M148 144Q165 150 165 178L149 183Q146 162 138 152Z" fill="url(#dk)" />
+            <path d="M148 144Q165 150 165 178L149 183Q146 162 138 152Z" fill="url(#rim)" />
+            <path
+              d="M86 200Q100 208 114 200"
+              stroke="#fff"
+              stroke-opacity=".12"
+              stroke-width="3"
+              fill="none"
+            />
+            <circle cx="100" cy="222" r="8" fill="#fff" opacity=".1" />
+            <g transform="translate(28 10) scale(.72)">
+              <path d="M84 150V196Q100 206 116 196V150Z" class="sk" />
+              <ellipse cx="100" cy="166" rx="28" ry="13" fill="#6B2E14" opacity=".28" />
+              <path
+                d="M81 190Q100 212 119 190"
+                fill="none"
+                stroke="#25577F"
+                stroke-width="5"
+                stroke-linecap="round"
+              />
+              <ellipse cx="46" cy="104" rx="8" ry="12" class="sk" />
+              <ellipse cx="154" cy="104" rx="8" ry="12" class="sk" />
+              <ellipse cx="46" cy="105" rx="4" ry="7" fill="#C06060" opacity=".35" />
+              <ellipse cx="154" cy="105" rx="4" ry="7" fill="#C06060" opacity=".35" />
+              <path
+                id="head"
+                class="sk"
+                d="M46 92C46 52 70 38 100 38C130 38 154 52 154 92C154 128 132 158 100 160C68 158 46 128 46 92Z"
+              />
+              <path
+                d="M46 92C46 52 70 38 100 38C130 38 154 52 154 92C154 128 132 158 100 160C68 158 46 128 46 92Z"
+                fill="url(#sh)"
+              />
+              <ellipse cx="68" cy="118" rx="13" ry="9" fill="url(#bl)" />
+              <ellipse cx="132" cy="118" rx="13" ry="9" fill="url(#bl)" />
+              <path
+                d="M96 103Q93 111 96.5 113.5Q100 115 103.5 113.5Q107 111 104 103"
+                fill="#6B2E14"
+                opacity=".13"
+              />
+              <circle cx="96.5" cy="112.5" r="1.3" fill="#5A2A1A" opacity=".45" />
+              <circle cx="103.5" cy="112.5" r="1.3" fill="#5A2A1A" opacity=".45" />
+              <path
+                d="M44 98C36 42 74 22 104 26C140 28 164 58 156 98C152 80 148 70 136 62C116 72 84 68 66 60C54 70 48 84 44 98Z"
+                fill="url(#hr)"
+              />
+              <path
+                d="M64 48Q96 32 134 46M72 38Q100 30 126 38M52 70Q56 58 66 50"
+                stroke="#C9A27A"
+                stroke-opacity=".35"
+                stroke-width="2"
+                fill="none"
+                stroke-linecap="round"
+              />
+              <g id="face"></g>
+            </g>
+            <g id="hands">
+              <path
+                d="M38 186L48 176L94 206L90 220Z"
+                class="sk"
+                stroke="#1C1410"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M162 186L152 176L106 206L110 220Z"
+                class="sk"
+                stroke="#1C1410"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <ellipse
+                cx="95"
+                cy="214"
+                rx="10"
+                ry="7.5"
+                class="sk"
+                stroke="#1C1410"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <ellipse
+                cx="105"
+                cy="214"
+                rx="10"
+                ry="7.5"
+                class="sk"
+                stroke="#1C1410"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M92 209l-2 8M96 208l-1 9M104 208l1 9M108 209l2 8"
+                stroke="#7A3F22"
+                stroke-opacity=".45"
+                stroke-width="1.2"
+                stroke-linecap="round"
+              />
+            </g>
+          </svg>
+        </div>
+        <div class="chips" id="chips" aria-hidden="true"></div>
+      </section>
+
+      <section class="vitals" aria-label="Genel durum">
+        <div class="card vital">
+          <div class="vital__head"><span>Sağlık</span><b id="v0"></b></div>
+          <div class="track"><i id="b0"></i></div>
+        </div>
+        <div class="card vital">
+          <div class="vital__head"><span>Enerji</span><b id="v1"></b></div>
+          <div class="track"><i id="b1"></i></div>
+        </div>
+        <div class="card vital">
+          <div class="vital__head"><span>Dişler</span><b id="v2"></b></div>
+          <div class="track"><i id="b2"></i></div>
+        </div>
+      </section>
+
+      <p class="card fact" id="fact" aria-live="polite"></p>
+
+      <section class="card feed" aria-label="Yiyecekler">
+        <div class="panel-head">
+          <h2>Yiyecek seç</h2>
+          <span>Sürükle ya da dokun</span>
+        </div>
+        <div class="tabs" role="tablist" id="tabs"></div>
+        <div class="tray" id="tray"></div>
+        <div class="feed__foot">
+          <ul class="legend" aria-label="Renk anlamları">
+            <li data-q="good">Besleyici</li>
+            <li data-q="mid">Dengeli</li>
+            <li data-q="low">Ara sıra</li>
+          </ul>
+          <button class="btn btn--accent" id="brush">Dişleri fırçala</button>
+        </div>
+        <div class="log-row">
+          <span>Son yenenler</span>
+          <div class="log" id="log"></div>
+          <span id="logEmpty">Henüz bir şey yenmedi</span>
+        </div>
+      </section>
+
+      <section class="card missions" aria-label="Görevler">
+        <div class="panel-head">
+          <h2>Günün görevleri</h2>
+          <span>Her görev +10 sağlık</span>
+        </div>
+        <ul class="quests" id="quests"></ul>
+        <div class="panel-head"><h2>Günlük hedefler</h2></div>
+        <div class="goals" id="goals"></div>
+      </section>
+
+      <section class="card report" aria-label="Vücut raporu">
+        <div class="tabs" role="tablist" id="rtabs">
+          <button class="tab" role="tab" aria-selected="true" data-p="body">Vücut</button>
+          <button class="tab" role="tab" aria-selected="false" data-p="food">Beslenme</button>
+          <button class="tab" role="tab" aria-selected="false" data-p="badges">
+            Rozetler <span id="bcount"></span>
+          </button>
+        </div>
+        <div class="panels">
+          <div class="panel" id="p-body" role="tabpanel">
+            <ul class="tags" id="tags"></ul>
+            <div id="metrics"></div>
+            <div class="sub">
+              <h3>Dişler</h3>
+              <div id="teeth"></div>
+            </div>
+          </div>
+
+          <div class="panel" id="p-food" role="tabpanel" hidden>
+            <div class="sub">
+              <h3>Besin dengesi</h3>
+              <div id="radar"></div>
+              <p class="balance" id="bal"></p>
+            </div>
+            <div class="sub">
+              <h3>Gidişat (son 15 yiyecek)</h3>
+              <div id="line"></div>
+              <ul class="legend-list">
+                <li data-c="good">Sağlık</li>
+                <li data-c="warn">Enerji</li>
+                <li data-c="blue">Diş</li>
+              </ul>
+            </div>
+            <div class="sub">
+              <h3>Yediklerin dağılımı</h3>
+              <div class="mix" id="mix"></div>
+              <ul class="legend-list" id="mixLeg"></ul>
+            </div>
+          </div>
+          <div class="panel" id="p-badges" role="tabpanel" hidden>
+            <ul class="badges" id="badges"></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" role="status"></div>
+    <div id="ghost"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/face.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/character-procedural.js"></script>
+    <script src="js/omer-model.js"></script>
+    <script src="js/character-glb.js"></script>
+  </body>
+</html>
